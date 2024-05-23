@@ -21,9 +21,9 @@ const rateLimitMiddleware = rateLimit({
 
 server.use(express.json())
 server.use(cors({
-    origin: "https://pokedex.vercel.app",
-    methods: ["POST", "GET"],
-    maxAge: 86400 
+    // origin: "https://pokedex.vercel.app",
+    // methods: ["POST", "GET"],
+    // maxAge: 86400 
 }))
 
 // todo: middlewares & logger
