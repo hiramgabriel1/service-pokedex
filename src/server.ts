@@ -4,6 +4,7 @@ import morgan from "morgan"
 import rateLimit from "express-rate-limit"
 import dotenv from "dotenv"
 import { database } from "./config/connection.db"
+import routerPokemon from "./routes/pokemon.routes"
 
 dotenv.config()
 database()
@@ -30,10 +31,10 @@ server.use(rateLimitMiddleware)
 server.use(morgan("dev"))
 
 // todo: endpoints here
-// server.use()
+server.use(routerPokemon)
 
 const bootstrap = () => {
-    server.listen(PORT)
+    server.listen(PORT || 4000)
     console.log(`http://localhost:${PORT}`);
 }
 
