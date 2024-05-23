@@ -120,6 +120,7 @@ export class Pokemon {
         pokemons.results,
         "pokedex"
       );
+      
       return res.json({ results: pokemonDetails, count: pokemons.count });
     } catch (error) {
       console.error("Error fetching Pokémon data:", error);
