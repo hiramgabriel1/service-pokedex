@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: Services to app
+  version: 1.0.0
+  description: A simple API documentation to app pokedex
+servers:
+  - url: http://localhost:4000
+    description: Local server
+
+paths:
+  /api/v1/entrenadores/:
+    get:
+      summary: Ver información de todos los entrenadores registrados en la db
+      responses:
+        200:
+          description: entrenadores encontrados correctamente.
+
+  /api/v1/page/:
+    get:
+      summary: Paginación de pokemons
+      responses:
+        200:
+          description: Información recibida correctamente.
+        500:
+          description: Error en el consumo de la API
+
+  /api/v1/add-entrenador/:
+    post:
+      summary: Crear entrenador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del entrenador
+                  example: Hiram
+                lastName:
+                  type: string
+                  description: Apellido del entrenador
+                  example: Gabriel
+                phoneNumber:
+                  type: string
+                  description: Número de teléfono del entrenador
+                  example: "+52 6334096902"
+                gymAwards:
+                  type: string
+                  description: Medallas de gimnasio
+                  example: medalla por ser buen backend xd
+      responses:
+        201:
+          description: Se ha creado con éxito.
+        400:
+          description: Error en los datos enviados.
+
+  /api/v1/update-entrenador/{id}/:
+    put:
+      summary: Actualizar datos de entrenador
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del entrenador a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del entrenador
+                  example: Hiram
+                lastName:
+                  type: string
+                  description: Apellido del entrenador
+                  example: Gabriel
+                phoneNumber:
+                  type: string
+                  description: Número de teléfono del entrenador
+                  example: "+52 6334096902"
+                gymAwards:
+                  type: string
+                  description: Medallas de gimnasio
+                  example: medalla por ser buen backend xd
+      responses:
+        201:
+          description: Se ha actualizado con éxito.
+        400:
+          description: Error en los datos enviados.
+
+  /api/v1/delete-entrenador/{id}:
+    delete:
+      summary: Elimina un entrenador por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del entrenador a eliminar
+      responses:
+        200:
+          description: Entrenador eliminado exitosamente
+        404:
+          description: Entrenador no encontrado

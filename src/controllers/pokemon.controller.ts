@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import {
     PokemonDetails,
     PokemonInterface,
-    PokemonData,
 } from "../interfaces/pokemon.interface";
 import { getPokemonInfo } from "../utils/pokemon.info";
 import { PokemonClient } from "pokenode-ts";
@@ -55,11 +54,10 @@ export class Pokemon {
         );
     }
 
-    private async doesPokemonExist(
+    private async doesEntrenadorExists(
         name: string,
         lastName: string
     ): Promise<boolean> {
-        // const existingPokemon = await EntrenadorModel.findOne({ name, lastName });
         const existingPokemon = await EntrenadorModel.where("name")
             .equals(name)
             .where("lastName")
@@ -84,7 +82,7 @@ export class Pokemon {
                     const allPokemons = await this.pokemonClient.listPokemons(1, 2000);
 
                     if (!allPokemons || !allPokemons.results) {
-                        return res.status(204).send(); // No Content
+                        return res.status(204).send();
                     }
 
                     const filteredPokemons = this.filterPokemons(
@@ -98,9 +96,8 @@ export class Pokemon {
                         endIndex
                     );
 
-                    if (paginatedPokemons.length === 0 && !pdf) {
-                        return res.status(204).send(); // No Content
-                    }
+                    if (paginatedPokemons.length === 0 && !pdf)
+                        return res.status(204).send();
 
                     pokemonDetails = await this.handlePokemonDetails(
                         paginatedPokemons,
@@ -121,7 +118,7 @@ export class Pokemon {
                         ValueLimit
                     );
                     if (!pokemons || !pokemons.results || pokemons.results.length === 0) {
-                        return res.status(204).send(); // No Content
+                        return res.status(204).send();
                     }
 
                     pokemonDetails = await this.handlePokemonDetails(
@@ -139,7 +136,7 @@ export class Pokemon {
             return res.status(500).json({ error: "Internal server error" });
         }
     }
-    async getMyPokemons(req: Request, res: Response): Promise<any> {
+    async getEntrenadores(_req: Request, res: Response): Promise<any> {
         try {
             const pokemons = await EntrenadorModel.find();
 
@@ -150,19 +147,18 @@ export class Pokemon {
             res.json(pokemons);
         } catch (error) {
             console.error("Error fetching data:", error);
-            if (!res.headersSent) {
+            if (!res.headersSent)
                 res.status(500).json({ error: "Internal Server Error" });
-            }
         }
     }
 
-    async addPokemon(req: Request, res: Response): Promise<any> {
+    async addEntrenador(req: Request, res: Response): Promise<any> {
         try {
             let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
             lastName = this.normalizeSearchTerm(lastName as string);
 
-            const entrenadorExists = await this.doesPokemonExist(name, lastName);
+            const entrenadorExists = await this.doesEntrenadorExists(name, lastName);
 
             if (entrenadorExists)
                 res
@@ -185,14 +181,14 @@ export class Pokemon {
         }
     }
 
-    async updatePokemon(req: Request, res: Response): Promise<any> {
+    async updateEntrenador(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
             let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
             lastName = this.normalizeSearchTerm(lastName as string);
 
-            const entrenadorExists = await this.doesPokemonExist(name, lastName);
+            const entrenadorExists = await this.doesEntrenadorExists(name, lastName);
 
             if (entrenadorExists)
                 res
@@ -212,7 +208,7 @@ export class Pokemon {
         }
     }
 
-    async deletePokemon(req: Request, res: Response): Promise<any> {
+    async deleteEntrenador(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
 
