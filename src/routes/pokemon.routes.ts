@@ -20,7 +20,7 @@ routerPokemon.post(`${path}/add-pokemon`, (req: Request, res: Response) =>
   pokemonController.addPokemon(req, res)
 );
 
-routerPokemon.put(`${path}/update-pokemon`, (req: Request, res: Response) =>
+routerPokemon.put(`${path}/update-pokemon/:id`, (req: Request, res: Response) =>
   pokemonController.updatePokemon(req, res)
 );
 

@@ -13,7 +13,7 @@ const server = express()
 const PORT = process.env.PORT
 const rateLimitMiddleware = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 50,
+    limit: 100,
     standardHeaders: "draft-7",
     legacyHeaders: false,
     message: "limite de peticiones excedido"

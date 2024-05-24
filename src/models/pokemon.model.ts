@@ -1,18 +1,22 @@
-// import { mongoose } from "../connection";
 import mongoose from "mongoose";
 import { Schema, Document, model } from "mongoose";
 
-interface Pokemon extends Document {
+interface Entrenador extends Document {
   name: string;
-  type: string;
-  imageUrl: string;
+  lastName: string;
+  phoneNumber: number;
+  gymAwards: string;
 }
 
-const pokemonSchema = new Schema<Pokemon>({
+const entrenadorSchema = new Schema<Entrenador>({
   name: String,
-  type: String,
-  imageUrl: String
+  lastName: String,
+  phoneNumber: Number,
+  gymAwards: String,
 });
-const PokemonModel = mongoose.model<Pokemon>("pokemon", pokemonSchema);
 
-export { PokemonModel };
+const EntrenadorModel = mongoose.model<Entrenador>("entrenador", entrenadorSchema);
+
+export { EntrenadorModel };
+
+// modificar por datos de entrenador
