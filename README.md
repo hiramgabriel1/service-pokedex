@@ -3,8 +3,8 @@
 
 Before running the project, ensure your system meets the following requirements:
 
-- Node.js 20.10+
-- MongoDB Community Server Download 7.0.4+ or MongoDB Atlas
+- Node.js 22.0.0
+- MongoDB Atlas
 - Backend Installation:
   - The Bestiary Frontend relies on the Bestiary Backend for seamless functionality.
   - Follow the instructions in the Backend Repository to set up and configure the backend before initiating the frontend.
