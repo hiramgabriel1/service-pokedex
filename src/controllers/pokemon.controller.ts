@@ -131,78 +131,78 @@ export class Pokemon {
             return res.status(500).json({ error: "Internal server error" });
         }
     }
-
-    async getMyPokemons(req: Request, res: Response): Promise<void> {
+    async getMyPokemons(req: Request, res: Response): Promise<any> {
         try {
             const pokemons = await EntrenadorModel.find();
 
-            if (!pokemons || pokemons.length === 0) res.status(204).send();
+            if (!pokemons || pokemons.length === 0) {
+                return res.status(204).send();
+            }
+
             res.json(pokemons);
         } catch (error) {
             console.error("Error fetching data:", error);
-            res.status(500).json({ error: "Internal Server Error" });
+            if (!res.headersSent) {
+                res.status(500).json({ error: "Internal Server Error" });
+            }
         }
     }
 
     async addPokemon(req: Request, res: Response): Promise<any> {
         try {
-            let { name, type } = req.body;
+            let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
 
-            const pokemonExists = await this.doesPokemonExist(name);
+            const entrenadorExists = await this.doesPokemonExist(name);
 
-            if (pokemonExists) {
-                return res
+            if (entrenadorExists)
+                res
                     .status(409)
-                    .json({ error: "Pokemon with the same name already exists" });
-            }
+                    .json({ error: "Entrenador with the same name already exists" });
 
-            const data = await getPokemonInfo(name, "pokemon");
-            const imageUrl = data?.imageUrl || "";
-            type = data?.type || type;
+            const newEntrenador = new EntrenadorModel({
+                name,
+                lastName,
+                phoneNumber,
+                gymAwards,
+            });
 
-            const newPokemon = new EntrenadorModel({ name, type, imageUrl });
+            await newEntrenador.save();
 
-            await newPokemon.save();
-
-            return res.status(201).json(newPokemon);
+            return res.status(201).json(newEntrenador);
         } catch (error) {
             console.error("Error handling POST request:", error);
             return res.status(500).json({ error: "Internal server error" });
         }
     }
 
-    async updatePokemon(req: Request, res: Response): Promise<void> {
+    async updatePokemon(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
-            let { name, type } = req.body;
+            let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
 
-            const pokemonExists = await this.doesPokemonExist(name);
+            const entrenadorExists = await this.doesPokemonExist(name);
 
-            if (pokemonExists)
+            if (entrenadorExists)
                 res
                     .status(409)
-                    .json({ error: "Pokemon with the same name already exists" });
+                    .json({ error: "Entrenador with the same name already exists" });
 
-            const data = await getPokemonInfo(name, "pokemon");
-            const imageUrl = data?.imageUrl || "";
-            type = data?.type || type;
-
-            const updatedPokemon = await EntrenadorModel.findByIdAndUpdate(
+            const updatedEntrenador = await EntrenadorModel.findByIdAndUpdate(
                 id,
-                { name, type, imageUrl },
+                { name, lastName, phoneNumber, gymAwards },
                 { new: true }
             );
 
-            res.json(updatedPokemon);
+            res.json(updatedEntrenador);
         } catch (error) {
-            console.error("Error updating pokemon:", error);
+            console.error("Error updating entrenador:", error);
             res.status(500).json({ error: "Internal server error" });
         }
     }
 
-    async deletePokemon(req: Request, res: Response): Promise<void> {
+    async deletePokemon(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
 
