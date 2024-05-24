@@ -52,7 +52,6 @@ Follow these steps to install and configure the project:
     └── tsconfig.json
 ```
 
-
 ## Usage
 
 To test in dev mode:

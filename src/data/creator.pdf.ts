@@ -1,19 +1,17 @@
 import { PDFDocument } from "pdf-lib";
+import { Request, Response } from "express";
+import { PokemonInfo } from "../interfaces/pokemon.interface";
 import axios from "axios";
 import fs from "fs";
 
-import { PokemonInfo } from "../interfaces/pokemon.interface";
+const inputPdfPath = "./public/pdf-input.pdf";
 
-const inputPdfPath = "./media/pdf-input.pdf";
-
-async function createPdf(pokemon: PokemonInfo) {
+export async function createPdf(pokemon: PokemonInfo): Promise<Uint8Array> {
     const existingPdfBytes = fs.readFileSync(inputPdfPath);
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const page = pdfDoc.getPages()[0];
     const imageUrl = pokemon.imageUrl;
-    const imageResponse = await axios.get(imageUrl, {
-        responseType: "arraybuffer",
-    });
+    const imageResponse = await axios.get(imageUrl, {responseType: "arraybuffer"});
     const imageBytes = new Uint8Array(imageResponse.data);
     const image = await pdfDoc.embedPng(imageBytes);
     const imageSize = image.scale(1);
@@ -70,5 +68,3 @@ async function createPdf(pokemon: PokemonInfo) {
 
     return pdfBytes;
 }
-
-export default createPdf;

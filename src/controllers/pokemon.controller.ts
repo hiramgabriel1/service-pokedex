@@ -4,9 +4,10 @@ import {
     PokemonInterface,
     PokemonData,
 } from "../interfaces/pokemon.interface";
-import { getPokemonInfo } from "../validators/pokemon.info";
+import { getPokemonInfo } from "../utils/pokemon.info";
 import { PokemonClient } from "pokenode-ts";
 import { PokemonModel } from "../models/pokemon.model";
+import { createPdf } from "../data/creator.pdf";
 
 export class Pokemon {
     private pokemonClient: PokemonClient;
@@ -116,7 +117,7 @@ export class Pokemon {
         }
     }
 
-    async getPokemones(req: Request, res: Response): Promise<void> {
+    async getMyPokemons(req: Request, res: Response): Promise<void> {
         try {
             const pokemons = await PokemonModel.find();
 
@@ -183,12 +184,38 @@ export class Pokemon {
         try {
             const { id } = req.params;
 
+            console.log(id);
+
             await PokemonModel.findByIdAndDelete(id);
-            
+
             res.json({ message: "Pokemon deleted successfully" });
         } catch (error) {
             console.error("Error deleting pokemon:", error);
             res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
+    async createPDF(req: Request, res: Response) {
+        try {
+            let { pokemon } = req.query;
+            pokemon = this.normalizeSearchTerm(pokemon as string);
+            const pokemonInfo = await getPokemonInfo(pokemon, "pokedexToPdf");
+
+            if (pokemonInfo !== null) {
+                const pdfBytes = await createPdf(pokemonInfo);
+                res.setHeader("Content-Type", "application/pdf");
+                res.setHeader("Content-Disposition", `attachment; filename=${pokemon}.pdf`);
+                res.setHeader("Content-Length", pdfBytes.length);
+                res.write(pdfBytes, "binary");
+                res.end(null, "binary");
+
+            } else {
+                res.status(404).send("Pokemon not found");
+            }
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
         }
     }
 }
