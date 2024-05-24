@@ -1,6 +1,3 @@
-# Bestiary
-
-The Bestiary Frontend is the user-facing component of our MERN (MongoDB, Express.js, React, Node.js) project, designed to deliver a seamless and intuitive experience. This frontend module incorporates robust features, including CRUD operations, MongoDB integration, Mongoose models, pagination for efficient data navigation, and dynamic PDF creation. It serves as the visual gateway for users to interact with and manage the diverse functionalities offered by the Bestiary application.
 
 ## Project Requirements
 
