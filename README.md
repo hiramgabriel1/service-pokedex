@@ -18,16 +18,21 @@ Follow these steps to install and configure the project:
 ## Project Structure
 
 ```
-└── 📁pokedex-service
+└── 📁service-pokedex
+    └── .env
     └── .env.example
     └── .gitignore
+    └── README.md
     └── nodemon.json
     └── package.json
     └── pnpm-lock.yaml
-    └── README.md
+    └── 📁public
+        └── pokemon.pdf
     └── 📁src
         └── 📁config
             └── connection.db.ts
+            └── swagger.ts
+            └── swagger.yaml
         └── 📁controllers
             └── pokemon.controller.ts
             └── pokemon.pdf.ts
@@ -40,7 +45,7 @@ Follow these steps to install and configure the project:
         └── 📁routes
             └── pokemon.routes.ts
         └── server.ts
-        └── 📁validators
+        └── 📁utils
             └── pokemon.info.ts
     └── tsconfig.json
 ```
