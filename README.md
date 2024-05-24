@@ -1,13 +1,9 @@
-
 ## Project Requirements
 
 Before running the project, ensure your system meets the following requirements:
 
 - Node.js 22.0.0
 - MongoDB Atlas
-- Backend Installation:
-  - The Bestiary Frontend relies on the Bestiary Backend for seamless functionality.
-  - Follow the instructions in the Backend Repository to set up and configure the backend before initiating the frontend.
 - Internet access
 
 ## Installation
