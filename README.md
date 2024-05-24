@@ -14,8 +14,8 @@ Before running the project, ensure your system meets the following requirements:
 
 Follow these steps to install and configure the project:
 
-1. Clone the repository: `git clone https://github.com/OwenBueno/pokedex-bestiarius.git`
-2. Enter the project directory: `cd pokedex-bestiarius`
+1. Clone the repository: `git clone https://github.com/itsrusty/service-pokedex.git`
+2. Enter the project directory: `cd service-pokedex`
 3. Install dependencies: `npm install`
 4. Modify the file with the IP and port of the backend: `src/globalVariables.tsx`
 
@@ -54,6 +54,7 @@ Follow these steps to install and configure the project:
 To test in dev mode:
 
 ```bash
+
 # instalar dependencias
 pnpm install
 
