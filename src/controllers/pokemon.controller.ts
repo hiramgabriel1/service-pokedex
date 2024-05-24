@@ -7,7 +7,7 @@ import {
 import { getPokemonInfo } from "../utils/pokemon.info";
 import { PokemonClient } from "pokenode-ts";
 import { PokemonModel } from "../models/pokemon.model";
-import { createPdf } from "../data/creator.pdf";
+import createPdf from "../data/creator.pdf";
 
 export class Pokemon {
     private pokemonClient: PokemonClient;

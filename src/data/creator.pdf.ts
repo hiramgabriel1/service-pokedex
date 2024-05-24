@@ -1,12 +1,11 @@
 import { PDFDocument } from "pdf-lib";
-import { Request, Response } from "express";
 import { PokemonInfo } from "../interfaces/pokemon.interface";
 import axios from "axios";
 import fs from "fs";
 
-const inputPdfPath = "./public/pdf-input.pdf";
+const inputPdfPath = "./public/pokemon.pdf";
 
-export async function createPdf(pokemon: PokemonInfo): Promise<Uint8Array> {
+async function createPdf(pokemon: PokemonInfo): Promise<Uint8Array> {
     const existingPdfBytes = fs.readFileSync(inputPdfPath);
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const page = pdfDoc.getPages()[0];
@@ -68,3 +67,6 @@ export async function createPdf(pokemon: PokemonInfo): Promise<Uint8Array> {
 
     return pdfBytes;
 }
+
+
+export default createPdf
