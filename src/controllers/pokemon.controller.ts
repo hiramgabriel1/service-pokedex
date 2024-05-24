@@ -55,8 +55,16 @@ export class Pokemon {
         );
     }
 
-    private async doesPokemonExist(name: string): Promise<boolean> {
-        const existingPokemon = await EntrenadorModel.findOne({ name });
+    private async doesPokemonExist(
+        name: string,
+        lastName: string
+    ): Promise<boolean> {
+        // const existingPokemon = await EntrenadorModel.findOne({ name, lastName });
+        const existingPokemon = await EntrenadorModel.where("name")
+            .equals(name)
+            .where("lastName")
+            .equals(lastName)
+            .exec();
         return !!existingPokemon;
     }
 
@@ -152,8 +160,9 @@ export class Pokemon {
         try {
             let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
+            lastName = this.normalizeSearchTerm(lastName as string);
 
-            const entrenadorExists = await this.doesPokemonExist(name);
+            const entrenadorExists = await this.doesPokemonExist(name, lastName);
 
             if (entrenadorExists)
                 res
@@ -181,8 +190,9 @@ export class Pokemon {
             const { id } = req.params;
             let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
+            lastName = this.normalizeSearchTerm(lastName as string);
 
-            const entrenadorExists = await this.doesPokemonExist(name);
+            const entrenadorExists = await this.doesPokemonExist(name, lastName);
 
             if (entrenadorExists)
                 res
