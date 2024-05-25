@@ -61,3 +61,10 @@ pnpm install
 
 # iniciar proyecto
 pnpm run dev
+
+```
+
+## Documentation Swagger
+```bash
+ http://localhost:5000/api-docs/
+```
