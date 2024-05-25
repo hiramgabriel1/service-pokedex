@@ -12,8 +12,9 @@ Follow these steps to install and configure the project:
 
 1. Clone the repository: `git clone https://github.com/itsrusty/service-pokedex.git`
 2. Enter the project directory: `cd service-pokedex`
-3. Install dependencies: `npm install`
-4. Modify the file with the IP and port of the backend: `src/globalVariables.tsx`
+3. Install dependencies: `pnpm install`
+4. Create .env file in root directory with: URI = mongodb+srv://rusty3031:dRAvaIJ5ahEHQHH6@pokedex.rsrttpi.mongodb.net/ && PORT = 5000
+
 
 ## Project Structure
 
