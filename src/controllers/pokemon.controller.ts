@@ -54,18 +54,6 @@ export class Pokemon {
         );
     }
 
-    private async doesEntrenadorExists(
-        name: string,
-        lastName: string
-    ): Promise<boolean> {
-        const existingPokemon = await EntrenadorModel.where("name")
-            .equals(name)
-            .where("lastName")
-            .equals(lastName)
-            .exec();
-        return !!existingPokemon;
-    }
-
     async getPokedex(req: Request, res: Response) {
         try {
             let { limit, page, search, pdf }: any = req.query;
@@ -158,13 +146,6 @@ export class Pokemon {
             name = this.normalizeSearchTerm(name as string);
             lastName = this.normalizeSearchTerm(lastName as string);
 
-            const entrenadorExists = await this.doesEntrenadorExists(name, lastName);
-
-            if (entrenadorExists)
-                res
-                    .status(409)
-                    .json({ error: "Entrenador with the same name already exists" });
-
             const newEntrenador = new EntrenadorModel({
                 name,
                 lastName,
@@ -187,13 +168,6 @@ export class Pokemon {
             let { name, lastName, phoneNumber, gymAwards } = req.body;
             name = this.normalizeSearchTerm(name as string);
             lastName = this.normalizeSearchTerm(lastName as string);
-
-            const entrenadorExists = await this.doesEntrenadorExists(name, lastName);
-
-            if (entrenadorExists)
-                res
-                    .status(409)
-                    .json({ error: "Entrenador with the same name already exists" });
 
             const updatedEntrenador = await EntrenadorModel.findByIdAndUpdate(
                 id,
